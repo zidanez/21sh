@@ -6,7 +6,7 @@
 /*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:46:16 by fnancy            #+#    #+#             */
-/*   Updated: 2019/12/10 17:11:37 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 17:21:30 by gdaemoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int			bltn_setenv(char **args, ENV *env)
 		spl = ft_strsplit(args[i], '=');
 		if (!spl[0])
 			return (setenv_error(&spl, 1488));
-		if (!spl[1])
-			spl[1] = ft_strdup("");
+		if (!spl[1] && (spl[1] = ft_strdup("")))
+			spl[2] = NULL;
 		if (ft_avl_search(env->locals, spl[0]) != 0)
 			return (setenv_error(&spl, 242));
 		else
