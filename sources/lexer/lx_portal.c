@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_portal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:17:36 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ char			*assig_into_portal(char *str, t_dlist **tok, t_stx **tree)
 	return (str);
 }
 
-static short	valid_assig(t_dlist *token_list)
+static short	valid_assig(t_dlist *t_list)
 {
-	if (token_list && TOK_TYPE == TK_EXPR)
+	if (t_list && TOK_TYPE == TK_EXPR)
 	{
 		TOK_TYPE = TK_VAR;
 		return (1);
@@ -39,15 +39,15 @@ static short	valid_assig(t_dlist *token_list)
 	return (0);
 }
 
-static short	chck_follow_pipe(t_dlist *token_list)
+static short	chck_follow_pipe(t_dlist *t_list)
 {
-	if (token_list->prev)
-		token_list = token_list->prev;
+	if (t_list->prev)
+		t_list = t_list->prev;
 	else
 		return (1);
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (!token_list || TOK_TYPE != TK_PIPE)
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (!t_list || TOK_TYPE != TK_PIPE)
 		return (1);
 	return (0);
 }

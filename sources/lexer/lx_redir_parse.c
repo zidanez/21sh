@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_redir_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:18:22 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:45:06 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,33 +104,3 @@ char			*redirect_pull(t_graph *g, char *s, t_stx **tr, t_dlist **tok)
 	}
 	return (s);
 }
-
-// char			*redirect_pull(t_graph *g, char *s, t_stx **tr, t_dlist **tok)
-// {
-// 	short	i;
-// 	char	*new;
-
-// 	if (!(*s))
-// 		return (s);
-// 	if (g->next)
-// 		return (in_redir_blocks(g, s, tr, tok));
-// 	else if (g->type == TK_EXPR)
-// 		s = parse_expr(s, tok, tr);
-// 	else
-// 	{
-// 		if (is_redir(s))
-// 			return (s);
-// 		if ((i = layer_parse_two(g->patt, s)))
-// 		{
-// 			new = pull_token(s, i);
-// 			if (!parse_comm(new, tok, tr, '>'))
-// 			{
-// 				free(new);
-// 				return (NULL);
-// 			}
-// 			free(new);
-// 			s = s + i;
-// 		}
-// 	}
-// 	return (s);
-// }

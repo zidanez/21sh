@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_validators_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:20:03 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ short	validate_envar(char *str)
 	return (1);
 }
 
-short	following_pipe(t_dlist *token_list)
+short	following_pipe(t_dlist *t_list)
 {
-	if (!token_list->content || (!token_list->prev && TOK_TYPE != TK_PIPE))
+	if (!t_list->content || (!t_list->prev && TOK_TYPE != TK_PIPE))
 		return (0);
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (token_list && TOK_TYPE == TK_PIPE)
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (t_list && TOK_TYPE == TK_PIPE)
 		return (1);
 	return (0);
 }

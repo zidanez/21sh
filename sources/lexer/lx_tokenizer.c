@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_tokenizer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:19:56 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	global_init(void)
 	g_input_nover = -1;
 }
 
-short	get_tokens(char *str, t_dlist **token_list)
+short	get_tokens(char *str, t_dlist **t_list)
 {
 	static t_stx	*tree[13];
 	t_tk_type		choice;
@@ -38,28 +38,28 @@ short	get_tokens(char *str, t_dlist **token_list)
 	while (*str)
 	{
 		choice = find_token(tree, str);
-		if (!(str = block_pass(choice, str, token_list, tree)))
-			return (clear_tokens(token_list, 1));
+		if (!(str = block_pass(choice, str, t_list, tree)))
+			return (clear_tokens(t_list, 1));
 	}
-	if (token_list[0]->content && !back_ps_check(token_list[0]))
-		return (clear_tokens(token_list, 1));
-	if (token_list[0]->content && !(list_ready_to_go(token_list)))
-		return (clear_tokens(token_list, 1));
-	make_token(token_list, NULL, TK_EOF);
+	if (t_list[0]->content && !back_ps_check(t_list[0]))
+		return (clear_tokens(t_list, 1));
+	if (t_list[0]->content && !(list_ready_to_go(t_list)))
+		return (clear_tokens(t_list, 1));
+	make_token(t_list, NULL, TK_EOF);
 	return (1);
 }
 
-t_dlist	**toklst_init(t_dlist **token_list)
+t_dlist	**toklst_init(t_dlist **t_list)
 {
-	if (token_list[0])
-		return (token_list);
-	token_list[0] = (t_dlist *)malloc(sizeof(t_dlist));
-	token_list[0]->next = NULL;
-	token_list[0]->content = NULL;
-	token_list[0]->prev = NULL;
-	token_list[0]->size = 0;
-	token_list[1] = token_list[0];
-	return (token_list);
+	if (t_list[0])
+		return (t_list);
+	t_list[0] = (t_dlist *)malloc(sizeof(t_dlist));
+	t_list[0]->next = NULL;
+	t_list[0]->content = NULL;
+	t_list[0]->prev = NULL;
+	t_list[0]->size = 0;
+	t_list[1] = t_list[0];
+	return (t_list);
 }
 
 short	concatenate_str(char **last_input, char *str)
@@ -78,7 +78,7 @@ short	concatenate_str(char **last_input, char *str)
 	return (1);
 }
 
-short	sh_tokenizer(char *str, t_dlist **token_list)
+short	sh_tokenizer(char *str, t_dlist **t_list)
 {
 	extern char	*g_last_input;
 	char		*tmp;
@@ -88,12 +88,12 @@ short	sh_tokenizer(char *str, t_dlist **token_list)
 		g_last_input ? ft_strdel(&g_last_input) : 0;
 	if ((!str || !(*str)) && INO == -1)
 		return (0);
-	token_list = toklst_init(token_list);
+	t_list = toklst_init(t_list);
 	if (g_last_input && concatenate_str(&g_last_input, str))
 		tmp = g_last_input;
 	else
 		tmp = str;
-	if ((i = get_tokens(tmp, token_list)) != 1)
+	if ((i = get_tokens(tmp, t_list)) != 1)
 	{
 		if (i < 0 && g_last_input)
 			g_last_input = null_last_input(&g_last_input);

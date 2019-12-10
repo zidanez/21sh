@@ -6,7 +6,7 @@
 /*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/12 04:39:52 by fnancy            #+#    #+#             */
-/*   Updated: 2019/12/10 16:08:09 by fnancy           ###   ########.fr       */
+/*   Updated: 2019/12/10 16:52:19 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int				sh_do_src(char *filename, ENV *env)
 			continue ;
 		}
 		dstr_del(&line);
-		dbg_tok_pr_flag ? dbg_print_tokens(toks[0]) : 0;
 		sh_tparse(toks[0], env, TK_EOF, &status);
 		ft_dlst_delf(toks, 0, free_token);
 	}
@@ -79,12 +78,12 @@ int				sh_launch_loop(ENV *env)
 {
 	t_dyn_string	*line;
 	t_dyn_string	*prompt;
-	t_dlist			*token_list[2];
+	t_dlist			*t_list[2];
 	int				status;
 	short			tk_status;
 
 	init_histr(env);
-	ft_bzero(token_list, sizeof(t_dlist *) * 2);
+	ft_bzero(t_list, sizeof(t_dlist *) * 2);
 	while (1)
 	{
 		if (!(prompt = sys_get_prompt_num(env, get_code())))
@@ -93,12 +92,12 @@ int				sh_launch_loop(ENV *env)
 			break ;
 		dstr_del(&prompt);
 		add_buf_history(line);
-		tk_status = sh_tokenizer(line->txt, token_list);
+		tk_status = sh_tokenizer(line->txt, t_list);
 		dstr_del(&line);
 		if (!(g_intr = 0) && tk_status <= 0)
 			continue ;
-		sh_tparse(token_list[0], env, TK_EOF, &status);
-		ft_dlst_delf(token_list, 0, free_token);
+		sh_tparse(t_list[0], env, TK_EOF, &status);
+		ft_dlst_delf(t_list, 0, free_token);
 	}
 	prompt ? dstr_del(&prompt) : 0;
 	return (sys_perror("Input was closed. Exiting.", 0, env));

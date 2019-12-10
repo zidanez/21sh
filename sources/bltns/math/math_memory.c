@@ -6,7 +6,7 @@
 /*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by fnancy            #+#    #+#             */
-/*   Updated: 2019/12/10 16:04:08 by fnancy           ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ t_dlist	*prepare_op_stack(t_dlist *ops, t_tk_type op)
 
 void	del_tokens(t_dlist *token)
 {
-	t_dlist *token_list;
+	t_dlist *t_list;
 
 	while (token)
 	{
-		token_list = token;
+		t_list = token;
 		token = token->next;
-		if (token_list->content && TOK_VALUE)
+		if (t_list->content && TOK_VALUE)
 			free(TOK_VALUE);
-		free(token_list->content);
-		free(token_list);
+		free(t_list->content);
+		free(t_list);
 	}
 }
 

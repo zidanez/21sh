@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_make_clear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:16:56 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 
 short	clear_tokens(t_dlist **tokens, short id)
 {
-	t_dlist	*token_list;
+	t_dlist	*t_list;
 
 	if (id)
 		unexpected_token(tokens);
 	while (*tokens)
 	{
-		token_list = *tokens;
+		t_list = *tokens;
 		*tokens = (*tokens)->next;
-		if (token_list->content && TOK_VALUE)
+		if (t_list->content && TOK_VALUE)
 			free(TOK_VALUE);
-		free(token_list->content);
-		free(token_list);
+		free(t_list->content);
+		free(t_list);
 	}
 	tokens[0] = NULL;
 	tokens[1] = NULL;

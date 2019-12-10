@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_tokenizer.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 00:54:50 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:21:01 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct		s_graph
 	struct s_graph	*next;
 }					t_graph;
 
-short				sh_tokenizer(char *str, t_dlist **token_list);
-t_dlist				**toklst_init(t_dlist **token_list);
+short				sh_tokenizer(char *str, t_dlist **t_list);
+t_dlist				**toklst_init(t_dlist **t_list);
 char				*null_last_input(char **last_input);
 short				scripts_closed(char *str);
 char				*cycle_to_the_start(char *str);
@@ -167,7 +167,7 @@ t_graph				*prof_in(void);
 t_graph				*redir_in(void);
 t_graph				*redir_two(void);
 t_graph				*redir_one(void);
-short				redir_proceeded(t_dlist *token_list);
+short				redir_proceeded(t_dlist *t_list);
 char				*redirect_pull(t_graph *g, char *s, t_stx **tr, \
 t_dlist **tok);
 char				*redir_pull(t_graph *g, char *s, t_stx **tr, \
@@ -195,7 +195,7 @@ char *str, t_dlist **tok);
 size_t				decimals_proceed(char *str, char *meta);
 short				closed_dels(char *str);
 t_tk_type			make_offset(t_dlist **token, t_tk_type type);
-short				list_ready_to_go(t_dlist **token_list);
+short				list_ready_to_go(t_dlist **t_list);
 short				is_separator(char str);
 short				is_sep_no_space(char str);
 short				is_meta(char *str, char meta);
@@ -212,11 +212,11 @@ short				is_sep_token(t_tk_type type);
 short				is_flow(t_tk_type type);
 short				is_token_here(char *start, char *meta);
 short				are_tokens_here(char *str);
-short				sep_detected(t_dlist *token_list);
-short				seps_check(t_dlist *token_list);
-short				back_ps_check(t_dlist *token_list);
-short				check_valid_sep(t_dlist *token_list);
-short				args_check(t_dlist *token_list);
+short				sep_detected(t_dlist *t_list);
+short				seps_check(t_dlist *t_list);
+short				back_ps_check(t_dlist *t_list);
+short				check_valid_sep(t_dlist *t_list);
+short				args_check(t_dlist *t_list);
 size_t				can_pull_tk(size_t j, char *str, t_dlist **tok, int t);
 int					special_meta(char meta);
 short				special_case(char br, char *str);
@@ -229,9 +229,9 @@ size_t				remove_spaces(char *str, size_t len);
 void				*ft_arrmemdel(void **ap);
 short				unexpected_token(t_dlist **tok);
 short				got_in_seq(char sym, char *seq);
-t_dlist				*skip_function(t_dlist *token_list);
-t_dlist				*skip_done_script(t_dlist *token_list);
-t_dlist				*skip_if_script(t_dlist *token_list);
+t_dlist				*skip_function(t_dlist *t_list);
+t_dlist				*skip_done_script(t_dlist *t_list);
+t_dlist				*skip_if_script(t_dlist *t_list);
 char				*skip_brackets(char *str, char br);
 char				*skip_spaces(char *str);
 size_t				skip_field(char *str, char skip);
@@ -241,8 +241,8 @@ char				*skip_spaces_newline(char *str);
 size_t				mirror_passes(char *str);
 short				mirrored(char *arr);
 char				*assig_into_portal(char *str, t_dlist **tok, t_stx **tree);
-void				exec_on(t_dlist *token_list);
-short				following_pipe(t_dlist *token_list);
+void				exec_on(t_dlist *t_list);
+short				following_pipe(t_dlist *t_list);
 short				valid_deref(char *str, size_t j);
 short				valid_sep(char *str);
 size_t				validate_simple_struct(char *s, size_t br);
@@ -250,8 +250,8 @@ size_t				validate_triple_struct(char *s, short pass);
 short				validate_var(char *varname);
 short				validate_envar(char *str);
 int					validate_ifs(char *str);
-void				expr_to_value(t_dlist *token_list);
-void				substitute_value(t_dlist *token_list);
+void				expr_to_value(t_dlist *t_list);
+void				substitute_value(t_dlist *t_list);
 char				*cook_err_msg(char *insertion);
 char				*markup_station(char *str, t_tk_type type);
 char				*cutting_mirr_station(char *str, t_tk_type type);
@@ -262,15 +262,15 @@ char				*cook_mirr(char *new, char *add);
 char				*join_mirr(char	*new, char *tmp, char *add);
 void				construct_node(t_graph *g, char **dict, size_t *r);
 short				input_no_over_code(void);
-int					expr_was_last(t_dlist *token_list);
-int					deref_was_last(t_dlist *token_list);
-void				merge_into_expr(t_dlist	*token_list, t_dlist **tok);
-void				merge_into_deref(t_dlist *token_list);
-void				merge_into_name(t_dlist	*token_list, t_dlist **tok);
+int					expr_was_last(t_dlist *t_list);
+int					deref_was_last(t_dlist *t_list);
+void				merge_into_expr(t_dlist	*t_list, t_dlist **tok);
+void				merge_into_deref(t_dlist *t_list);
+void				merge_into_name(t_dlist	*t_list, t_dlist **tok);
 void				yes_we_can(char *s, t_dlist **tk, t_tk_type type, size_t j);
 
-# define TOK_TYPE ((t_tok *)(token_list->content))->type
-# define TOK_VALUE ((t_tok *)(token_list->content))->value
+# define TOK_TYPE ((t_tok *)(t_list->content))->type
+# define TOK_VALUE ((t_tok *)(t_list->content))->value
 
 # define INO g_input_nover
 

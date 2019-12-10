@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_substitutors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:19:49 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,35 @@ char	*cook_err_msg(char *insertion)
 	return (str);
 }
 
-void	expr_to_value(t_dlist *token_list)
+void	expr_to_value(t_dlist *t_list)
 {
-	while (token_list && (TOK_TYPE == TK_EMPTY || TOK_TYPE == TK_SEP))
-		token_list = token_list->prev;
-	while (token_list && (TOK_TYPE != TK_EMPTY && TOK_TYPE != RETURN))
+	while (t_list && (TOK_TYPE == TK_EMPTY || TOK_TYPE == TK_SEP))
+		t_list = t_list->prev;
+	while (t_list && (TOK_TYPE != TK_EMPTY && TOK_TYPE != RETURN))
 	{
 		if (TOK_TYPE == TK_EXPR)
 			TOK_TYPE = TK_VALUE;
-		token_list = token_list->prev;
+		t_list = t_list->prev;
 	}
 }
 
-void	substitute_value(t_dlist *token_list)
+void	substitute_value(t_dlist *t_list)
 {
-	while (token_list && TOK_TYPE != TK_ASSIGM)
+	while (t_list && TOK_TYPE != TK_ASSIGM)
 	{
 		if (TOK_TYPE == TK_EXPR)
 			TOK_TYPE = TK_VALUE;
-		token_list = token_list->prev;
+		t_list = t_list->prev;
 	}
 }
 
-void	exec_on(t_dlist *token_list)
+void	exec_on(t_dlist *t_list)
 {
-	while (token_list)
+	while (t_list)
 	{
 		if (TOK_TYPE == TK_EXPR)
 			if (!ft_strcmp(TOK_VALUE, "exec"))
 				TOK_TYPE = TK_EXEC;
-		token_list = token_list->next;
+		t_list = t_list->next;
 	}
 }

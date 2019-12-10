@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_redir_parse_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:18:15 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ char			*redir_pull(t_graph *g, char *s, t_stx **tr, t_dlist **tok)
 	return (s);
 }
 
-short			redir_proceeded(t_dlist *token_list)
+short			redir_proceeded(t_dlist *t_list)
 {
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (token_list && token_list->content && is_tok_redir(TOK_TYPE, 1))
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (t_list && t_list->content && is_tok_redir(TOK_TYPE, 1))
 		return (1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_quots_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:18:01 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "sh_token.h"
 #include "sh_tokenizer.h"
 
-int		deref_was_last(t_dlist *token_list)
+int		deref_was_last(t_dlist *t_list)
 {
-	if (token_list && token_list->content)
+	if (t_list && t_list->content)
 		if (TOK_TYPE == TK_DEREF || TOK_TYPE == TK_NAME)
 			return (1);
 	return (0);

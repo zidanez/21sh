@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_validators.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:20:09 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t			validate_triple_struct(char *s, short pass)
 	return (pass == 2 ? 1 : 0);
 }
 
-static short	slash_tok(t_dlist *token_list)
+static short	slash_tok(t_dlist *t_list)
 {
 	if (TOK_TYPE == TK_SEP)
 	{
@@ -67,16 +67,16 @@ static short	slash_tok(t_dlist *token_list)
 	return (0);
 }
 
-short			check_valid_sep(t_dlist *token_list)
+short			check_valid_sep(t_dlist *t_list)
 {
-	if (!token_list->content || !TOK_TYPE)
+	if (!t_list->content || !TOK_TYPE)
 		return (0);
-	while (token_list && TOK_TYPE != TK_SEP)
-		token_list = token_list->prev;
-	token_list = (token_list) ? token_list->prev : token_list;
-	while (token_list && (TOK_TYPE == TK_EMPTY || slash_tok(token_list)))
-		token_list = token_list->prev;
-	if (!token_list)
+	while (t_list && TOK_TYPE != TK_SEP)
+		t_list = t_list->prev;
+	t_list = (t_list) ? t_list->prev : t_list;
+	while (t_list && (TOK_TYPE == TK_EMPTY || slash_tok(t_list)))
+		t_list = t_list->prev;
+	if (!t_list)
 		return (0);
 	if (TOK_TYPE != TK_EXPR && TOK_TYPE != TK_NAME && TOK_TYPE != TK_VALUE
 	&& TOK_TYPE != TK_SUBSH && TOK_TYPE != TK_MATH && !is_tok_redir(TOK_TYPE, 0)

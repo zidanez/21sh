@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_redir_trace.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:18:26 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 static short	stop_point(t_dlist **to_list, char **s)
 {
 	t_tk_type	tk;
-	t_dlist		*token_list;
+	t_dlist		*t_list;
 
 	tk = 0;
-	token_list = to_list[1];
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (token_list)
+	t_list = to_list[1];
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (t_list)
 		tk = TOK_TYPE;
 	if (is_tok_redir(tk, 1) || tk == TK_EXPR)
 		return (0);
@@ -32,11 +32,11 @@ static short	stop_point(t_dlist **to_list, char **s)
 	return (1);
 }
 
-static short	prof_found(t_tk_type type, t_dlist *token_list)
+static short	prof_found(t_tk_type type, t_dlist *t_list)
 {
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (token_list && (TOK_TYPE == TK_PROF_IN || TOK_TYPE == TK_PROF_OUT))
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (t_list && (TOK_TYPE == TK_PROF_IN || TOK_TYPE == TK_PROF_OUT))
 		if (is_tok_redir(type, 1))
 			return (1);
 	return (0);

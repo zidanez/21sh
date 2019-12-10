@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_redir_parse_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:18:18 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:57:27 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,52 @@
 #include "sh_token.h"
 #include "sh_tokenizer.h"
 
-void			merge_into_name(t_dlist	*token_list, t_dlist **tok)
+void			merge_into_name(t_dlist *t_list, t_dlist **tok)
 {
 	t_dlist	*next;
 	t_dlist	*current;
 	char	*tmp;
 
-	while (token_list)
+	while (t_list)
 	{
-		if (token_list->content && (TOK_TYPE == TK_NAME))
+		if (t_list->content && (TOK_TYPE == TK_NAME))
 		{
-			current = token_list;
-			token_list = token_list->next;
-			if (token_list && (TOK_TYPE == TK_NAME || TOK_TYPE == TK_EXPR))
+			current = t_list;
+			t_list = t_list->next;
+			if (t_list && (TOK_TYPE == TK_NAME || TOK_TYPE == TK_EXPR))
 			{
-				tmp = ft_strjoin(((t_tok *)(current->content))->value, TOK_VALUE);
+				tmp = ft_strjoin(((t_tok *)(current->content))->value,\
+									TOK_VALUE);
 				free(((t_tok *)(current->content))->value);
 				((t_tok *)(current->content))->value = tmp;
-				next = token_list->next;
-				ft_dlstrmelem(&token_list);
+				next = t_list->next;
+				ft_dlstrmelem(&t_list);
 				tok[1] = next ? tok[1] : current;
-				token_list = current;
+				t_list = current;
 			}
 		}
 		else
-			token_list = token_list->next;
+			t_list = t_list->next;
 	}
 }
 
 static void		into_filename(t_dlist *last_token, t_dlist **tok)
 {
-	t_dlist	*token_list;
+	t_dlist	*t_list;
 
-	token_list = tok[1];
-	while (token_list && token_list != last_token)
-		token_list = token_list->prev;
-	if (!token_list)
+	t_list = tok[1];
+	while (t_list && t_list != last_token)
+		t_list = t_list->prev;
+	if (!t_list)
 		return ;
-	token_list = token_list->next;
-	while (token_list && (TOK_TYPE == TK_DEREF || TOK_TYPE == TK_EXPR))
+	t_list = t_list->next;
+	while (t_list && (TOK_TYPE == TK_DEREF || TOK_TYPE == TK_EXPR))
 	{
-		if (token_list && TOK_TYPE == TK_DEREF)
-			token_list = (token_list->next) ? token_list->next : token_list;
-		else if (token_list && TOK_TYPE == TK_EXPR)
+		if (t_list && TOK_TYPE == TK_DEREF)
+			t_list = (t_list->next) ? t_list->next : t_list;
+		else if (t_list && TOK_TYPE == TK_EXPR)
 			TOK_TYPE = TK_FILENAME;
-		token_list = token_list->next;
+		t_list = t_list->next;
 	}
 }
 
@@ -69,16 +70,13 @@ static char		*parse_filename(char *s, size_t i, t_stx **tr, t_dlist **tok)
 
 	last_token = tok[1];
 	new = pull_token(s - i, i);
-	dbg_print_tokens(tok[0]);
 	if (!(parse_comm(new, tok, tr, 0)))
 	{
 		free(new);
 		return (NULL);
 	}
 	free(new);
-	dbg_print_tokens(tok[0]);
 	into_filename(last_token, tok);
-	dbg_print_tokens(tok[0]);
 	return (s);
 }
 

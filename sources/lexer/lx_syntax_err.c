@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_syntax_err.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:19:53 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_err_messg(t_tk_type type)
 	return (str);
 }
 
-char	*defined_error(t_dlist *token_list)
+char	*defined_error(t_dlist *t_list)
 {
 	char	*str;
 	char	*tmp;
@@ -95,20 +95,20 @@ char	*defined_error(t_dlist *token_list)
 
 short	unexpected_token(t_dlist **tok)
 {
-	t_dlist *token_list;
+	t_dlist *t_list;
 	char	*str;
 
-	token_list = tok[1];
-	if (!token_list || !token_list->content)
+	t_list = tok[1];
+	if (!t_list || !t_list->content)
 		str = ft_strdup(STRTERR);
 	else
 	{
-		while (token_list && TOK_TYPE == TK_EMPTY)
-			token_list = token_list->prev;
-		if (!token_list || !token_list->content)
+		while (t_list && TOK_TYPE == TK_EMPTY)
+			t_list = t_list->prev;
+		if (!t_list || !t_list->content)
 			str = ft_strdup(STRTERR);
 		else
-			str = defined_error(token_list);
+			str = defined_error(t_list);
 	}
 	sys_perror(str, 0, NULL);
 	free(str);

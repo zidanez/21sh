@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_usefull_func.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:20:00 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ short	is_sep_token(t_tk_type type)
 	return (0);
 }
 
-short	sep_detected(t_dlist *token_list)
+short	sep_detected(t_dlist *t_list)
 {
-	if (!token_list->content || !TOK_TYPE)
+	if (!t_list->content || !TOK_TYPE)
 		return (0);
-	while (token_list && TOK_TYPE == TK_EMPTY)
-		token_list = token_list->prev;
-	if (!token_list)
+	while (t_list && TOK_TYPE == TK_EMPTY)
+		t_list = t_list->prev;
+	if (!t_list)
 		return (0);
 	if (TOK_TYPE != TK_SEP)
 		return (0);

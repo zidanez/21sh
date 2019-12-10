@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_backgr_offset.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:15:00 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static void	all_to_backgr(t_dlist **token, t_dlist *backgr)
 	token[1]->next = NULL;
 }
 
-static void	to_backgr(t_dlist *token_list, t_dlist *backgr)
+static void	to_backgr(t_dlist *t_list, t_dlist *backgr)
 {
 	t_dlist *tmp;
 
-	tmp = token_list->next;
-	token_list->next = backgr;
-	backgr->prev = token_list;
+	tmp = t_list->next;
+	t_list->next = backgr;
+	backgr->prev = t_list;
 	backgr->next = tmp;
 	if (tmp && tmp->prev)
 		tmp->prev = backgr;
@@ -54,27 +54,27 @@ short		stop_point(t_tk_type type)
 
 t_tk_type	make_offset(t_dlist **token, t_tk_type type)
 {
-	t_dlist *token_list;
+	t_dlist *t_list;
 	t_dlist *backgr;
 
 	make_token(token, NULL, type);
-	token_list = token[1]->prev;
+	t_list = token[1]->prev;
 	backgr = token[1];
-	while (token_list && !stop_point(TOK_TYPE) && token_list->prev)
+	while (t_list && !stop_point(TOK_TYPE) && t_list->prev)
 	{
 		if (TOK_TYPE == TK_FI)
-			token_list = skip_if_script(token_list);
+			t_list = skip_if_script(t_list);
 		else if (TOK_TYPE == TK_DONE)
-			token_list = skip_done_script(token_list);
+			t_list = skip_done_script(t_list);
 		else if (TOK_TYPE == TK_FEND)
-			token_list = skip_function(token_list);
-		token_list = (token_list->prev) ? token_list->prev : token_list;
+			t_list = skip_function(t_list);
+		t_list = (t_list->prev) ? t_list->prev : t_list;
 	}
 	token[1] = (token[1] == token[0]) ? backgr : backgr->prev;
-	if (!token_list || !token_list->prev)
+	if (!t_list || !t_list->prev)
 		all_to_backgr(token, backgr);
 	else
-		to_backgr(token_list, backgr);
+		to_backgr(t_list, backgr);
 	make_token(token, NULL, TK_ARSHLOCH);
 	return (TK_BCKR_PS);
 }

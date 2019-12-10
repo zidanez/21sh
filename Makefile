@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/07/06 08:51:16 by hgranule          #+#    #+#              #
-#    Updated: 2019/12/10 15:45:47 by fnancy           ###   ########.fr        #
+#    Created: 2019/07/06 08:51:16 by fnancy            #+#    #+#              #
+#    Updated: 2019/12/10 16:55:12 by fnancy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,8 +121,6 @@ SRC_FILES = sh_main.c sh_launch.c \
 			lexer/lx_script_in_4.c lexer/lx_script_in_5.c \
 			lexer/lx_args_check.c lexer/lx_redir_parse_3.c \
 			lexer/lx_apof_parse.c \
-			\
-			sys_tools/sys_dbg_bltn.c \
 			\
 			printf/ft_insert_c.c printf/ft_insert_doubles.c \
 			printf/ft_bf_ariphmetic.c printf/ft_bf_cmp.c \

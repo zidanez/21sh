@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_apof_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:14:31 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:43:57 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,86 +14,61 @@
 #include "sh_token.h"
 #include "sh_tokenizer.h"
 
-int			expr_was_last(t_dlist *token_list)
+int			expr_was_last(t_dlist *t_list)
 {
-	if (token_list && token_list->content)
+	if (t_list && t_list->content)
 		if (TOK_TYPE == TK_EXPR || TOK_TYPE == TK_FILENAME)
 			return (1);
 	return (0);
 }
 
-void		merge_into_deref(t_dlist *token_list)
+void		merge_into_deref(t_dlist *t_list)
 {
-	while (token_list)
+	while (t_list)
 	{
-		if (token_list->content && (TOK_TYPE == TK_DEREF || TOK_TYPE == TK_NAME))
+		if (t_list->content && (TOK_TYPE == TK_DEREF\
+									|| TOK_TYPE == TK_NAME))
 		{
-			token_list = token_list->next;
-			while (token_list && (TOK_TYPE == TK_EXPR))
+			t_list = t_list->next;
+			while (t_list && (TOK_TYPE == TK_EXPR))
 			{
 				TOK_TYPE = TK_NAME;
-				token_list = token_list->next;
+				t_list = t_list->next;
 			}
 		}
 		else
-			token_list = token_list->next;
+			t_list = t_list->next;
 	}
 }
 
-void		merge_into_expr(t_dlist	*token_list, t_dlist **tok)
+void		merge_into_expr(t_dlist *t_list, t_dlist **tok)
 {
 	t_dlist	*next;
 	t_dlist	*current;
 	char	*tmp;
 
-	while (token_list)
+	while (t_list)
 	{
-		if (token_list->content && (TOK_TYPE == TK_EXPR || TOK_TYPE == TK_FILENAME))
+		if (t_list->content && (TOK_TYPE == TK_EXPR || TOK_TYPE == TK_FILENAME))
 		{
-			current = token_list;
-			token_list = token_list->next;
-			if (token_list && (TOK_TYPE == TK_EXPR || TOK_TYPE == TK_FILENAME))
+			current = t_list;
+			t_list = t_list->next;
+			if (t_list && (TOK_TYPE == TK_EXPR || TOK_TYPE == TK_FILENAME))
 			{
-				tmp = ft_strjoin(((t_tok *)(current->content))->value, TOK_VALUE);
+				tmp = ft_strjoin(((t_tok *)(current->content))->value,\
+									TOK_VALUE);
 				free(((t_tok *)(current->content))->value);
 				((t_tok *)(current->content))->value = tmp;
-				next = token_list->next;
-				ft_dlstrmelem(&token_list);
+				next = t_list->next;
+				ft_dlstrmelem(&t_list);
 				tok[1] = next ? tok[1] : current;
-				token_list = current;
+				t_list = current;
 			}
 		}
 		else
-			token_list = token_list->next;
+			t_list = t_list->next;
 	}
 }
-
-// void		merge_expr(t_dlist	*last_token, t_dlist **tok)
-// {
-// 	t_dlist	*token_list;
-// 	t_dlist	*prev;
-// 	t_dlist	*current;
-// 	char	*tmp;
-
-// 	current = tok[1];
-// 	while (current && current != last_token)
-// 	{
-// 		token_list = current;
-// 		current = current->prev;
-// 	}
-// 	if (current && TOK_TYPE != TK_DEREF && TOK_VALUE)
-// 	{
-// 		tmp = ft_strjoin(((t_tok *)(current->content))->value, TOK_VALUE);
-// 		free(((t_tok *)(current->content))->value);
-// 		((t_tok *)(current->content))->value = tmp;
-// 		prev = token_list->next;
-// 		// current->next = prev;
-// 		// if (prev)
-// 		// 	prev->prev = current;
-// 		ft_dlstrmelem(&token_list);
-// 		tok[1] = prev ? tok[1] : current;
-// 	}
-// }
 
 static char	*pull_apof(char *str, t_dlist **tok)
 {

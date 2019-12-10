@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lx_args_check.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/19 00:53:18 by gdaemoni          #+#    #+#             */
-/*   Updated: 2019/12/10 16:14:37 by gdaemoni         ###   ########.fr       */
+/*   Updated: 2019/12/10 16:42:40 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ short			input_no_over_code(void)
 	return (0);
 }
 
-static short	is_tok_what(t_dlist *token_list, t_tk_type type)
+static short	is_tok_what(t_dlist *t_list, t_tk_type type)
 {
 	if (type == SEPS)
 		if (TOK_TYPE != TK_SEP && TOK_TYPE != TK_OR && TOK_TYPE != TK_AND
@@ -43,14 +43,14 @@ static short	is_tok_what(t_dlist *token_list, t_tk_type type)
 	return (1);
 }
 
-static short	vector_to_left(t_dlist *token_list)
+static short	vector_to_left(t_dlist *t_list)
 {
-	while (token_list && (TOK_TYPE == TK_EMPTY))
-		token_list = token_list->prev;
-	if (!token_list)
+	while (t_list && (TOK_TYPE == TK_EMPTY))
+		t_list = t_list->prev;
+	if (!t_list)
 		return (1);
-	if (token_list && !is_tok_what(token_list, SEPS) &&
-	!is_tok_what(token_list, FLOWS)
+	if (t_list && !is_tok_what(t_list, SEPS) &&
+	!is_tok_what(t_list, FLOWS)
 	&& TOK_TYPE != TK_DEREF && TOK_TYPE != TK_ASSIGM &&
 	TOK_TYPE != TK_FUNCTION &&
 	!is_tok_redir(TOK_TYPE, 1) && TOK_TYPE != TK_EXEC &&
@@ -59,33 +59,33 @@ static short	vector_to_left(t_dlist *token_list)
 	return (1);
 }
 
-static short	vector_to_right(t_dlist *token_list)
+static short	vector_to_right(t_dlist *t_list)
 {
-	while (token_list && (TOK_TYPE == TK_EMPTY))
-		token_list = token_list->next;
-	if (!token_list)
+	while (t_list && (TOK_TYPE == TK_EMPTY))
+		t_list = t_list->next;
+	if (!t_list)
 		return (1);
-	if (token_list && !is_tok_what(token_list, SEPS) && TOK_TYPE != TK_IN
-	&& !is_tok_redir(TOK_TYPE, 1) && !is_tok_what(token_list, PROF)
+	if (t_list && !is_tok_what(t_list, SEPS) && TOK_TYPE != TK_IN
+	&& !is_tok_redir(TOK_TYPE, 1) && !is_tok_what(t_list, PROF)
 	&& TOK_TYPE != TK_FD)
 		return (0);
 	return (1);
 }
 
-short			args_check(t_dlist *token_list)
+short			args_check(t_dlist *t_list)
 {
-	while (token_list)
+	while (t_list)
 	{
-		while (token_list && TOK_TYPE == TK_EMPTY)
-			token_list = token_list->next;
-		if (token_list && (TOK_TYPE == TK_MATH || TOK_TYPE == TK_SUBSH))
+		while (t_list && TOK_TYPE == TK_EMPTY)
+			t_list = t_list->next;
+		if (t_list && (TOK_TYPE == TK_MATH || TOK_TYPE == TK_SUBSH))
 		{
-			if (!vector_to_left(token_list->prev))
+			if (!vector_to_left(t_list->prev))
 				return (0);
-			if (!vector_to_right(token_list->next))
+			if (!vector_to_right(t_list->next))
 				return (0);
 		}
-		token_list = token_list ? token_list->next : NULL;
+		t_list = t_list ? t_list->next : NULL;
 	}
 	return (1);
 }
