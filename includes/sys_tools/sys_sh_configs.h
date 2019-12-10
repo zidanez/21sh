@@ -6,14 +6,14 @@
 /*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 10:36:52 by fnancy            #+#    #+#             */
-/*   Updated: 2019/12/10 16:33:15 by fnancy           ###   ########.fr       */
+/*   Updated: 2019/12/10 17:03:05 by fnancy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SYS_SH_CONFIGS_H
 # define SYS_SH_CONFIGS_H
 
-# define SHELL_NAME_STD "42sh"
+# define SHELL_NAME_STD "21sh"
 # define SH_VAR_SHNAME "SHELL_NAME"
 # define SH_VAR_HIST_RC_PATH "HOME"
 
@@ -21,8 +21,8 @@
 # define PROMPT_OK_STATUS_C "\033[32mOK\033[0m"
 # define PROMPT_KO_STATUS_C "\033[31mKO\033[0m"
 
-# define SH_RC_FILE ".42shrc"
-# define SH_HIST_FILE ".42history"
+# define SH_RC_FILE ".21shrc"
+# define SH_HIST_FILE ".21history"
 
 # define SH_VAR_PROMPT "PS"
 # define SH_PROMPT ">>> "
