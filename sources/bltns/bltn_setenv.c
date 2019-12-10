@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bltn_setenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fnancy <fnancy@student.42.fr>              +#+  +:+       +#+        */
+/*   By: gdaemoni <gdaemoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:46:16 by fnancy            #+#    #+#             */
-/*   Updated: 2019/12/10 16:04:53 by fnancy           ###   ########.fr       */
+/*   Updated: 2019/12/10 17:11:37 by gdaemoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 static void	free_spl_here(char **args)
 {
-	if (args[1])
-		free(args[1]);
-	if (args[0])
-		free(args[0]);
+	size_t	i;
+
+	i = -1;
+	while (args[++i])
+		free(args[i]);
 	free(args);
 }
 
